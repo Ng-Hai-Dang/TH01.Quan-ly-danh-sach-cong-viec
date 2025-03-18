@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Công việc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #e3f2fd;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            background: #f1f8e9;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .task-item div .btn {
+            width: auto;
+            margin-left: 5px;
+        }
+
+        .btn.edit {
+            background-color: #2196F3;
+        }
+
+        .btn.delete {
+            background-color: #F44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Quản lý Công việc</h1>
+        <input type="text" id="taskInput" placeholder="Nhập công việc...">
+        <button class="btn" onclick="addTask()">Thêm Công việc</button>
+        <ul id="taskList" class="task-list"></ul>
+    </div>
+
+    <script>
+        const taskList = document.getElementById('taskList');
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+
+            if (taskText === '') return;
+
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = `
+                <span>${taskText}</span>
+                <div>
+                    <button class="btn edit" onclick="editTask(this)">Sửa</button>
+                    <button class="btn delete" onclick="deleteTask(this)">Xóa</button>
+                </div>
+            `;
+            taskList.appendChild(li);
+            taskInput.value = '';
+        }
+
+        function editTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            const taskText = prompt("Chỉnh sửa công việc:", taskItem.children[0].textContent);
+            if (taskText !== null && taskText.trim() !== '') {
+                taskItem.children[0].textContent = taskText;
+            }
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            taskList.removeChild(taskItem);
+        }
+    </script>
+</body>
+
+</html>
